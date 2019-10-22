@@ -33,7 +33,7 @@ int main () {
     cout << "   Que desea comprar\n" << endl;
     cout << "       1.- Bebidas" << endl;
     cout << "       2.- Comida" << endl;
-    cout << "       3.- Cambiar billete en modenas\n" << endl;
+    cout << "       3.- Introduce tu el valor del producto\n" << endl;
     cout << "       0.- Salir" << endl;
     cout << "\n   Eleccion: ";
     cin >> s; // Inicio de la entrada de datos
@@ -252,7 +252,9 @@ int main () {
     } else if (s==0){
             return 0;
     } else if (s==3) {
-        cout << "\n   Ingrese su dinero: ";
+        cout << "\n   ingrese el valor del producto: ";
+        cin >> z;
+        cout << "\n\n   Ingrese su dinero: ";
         cin >> y;
         x = y-z;
         cout << "\n    Su cambio es $" << x;
