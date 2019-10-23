@@ -30,6 +30,7 @@ int main(){
         // Este condicional se activa si no se encontro ningun divisor exacto antes de llegar al numero dado
         }else {
             cout << "   - El numero " <<a<< " es primo" << endl;
+            d+=1;
         }
     }
     // Esta linea muestra en pantalla el total de numeros primos (d) encontrados
