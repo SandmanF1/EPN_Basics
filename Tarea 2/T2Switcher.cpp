@@ -19,9 +19,11 @@ int main(){
     cin>>chooser;
     switch(chooser){
         case 1:{
-            double numero,nmax,nmin;
-            while(numero!=0){
-                cout<<"\nIngrese un numero entero, 0 termina el programa: ";
+            double numero,nmax=0,nmin=0;
+
+            cout<<"\nBienvenido, el presente programa esta hecho para determinar el menor y el mayor numero ingresado, puede ingresar una cantidad arbitraria de numeros, para terminar digite 0."<<endl;
+            do {
+                cout<<"\nIngrese un numero, 0 termina el programa: ";
                 cin>> numero;
                 if(numero>nmax){
                     nmax=numero;
@@ -29,8 +31,8 @@ int main(){
                 if((numero<nmin || nmin==0) && numero!=0){
                     nmin=numero;
                 }else{}
-            }
-            cout<<"\t- El numero maximo ingresado fue: "<<nmax<<endl;
+            }while(numero!=0);
+            cout<<"\n\t- El numero maximo ingresado fue: "<<nmax<<endl;
             cout<<"\t- El numero minimo ingresado fue: "<<nmin<<endl;
         break;
         }
@@ -49,18 +51,48 @@ int main(){
         break;
         }
         case 3:{
-            int i=1,n;
-            double sigma=0,pi,error;
-            cout<<"\nEl presente programa es capaz de aproximar el numero pi usando la forma sumatoria:\n\n    - pi= sqrt(E(6/(i^2))) desde i=1 hasta n. \n\nIngrese el grado de aproximacion deseado (n): ";
-            cin>>n;
+            int i=1,n,w;
+            long double sigma=0,pi,error;
+            cout<<"Correccion de ultimo minuto:\n\t- Ingrese 1 si desea hacer la aproximacion ingresando las iteraciones del sumatorio.\n\t- Ingrese 2 si desea hacer la aproximacion ingresando el error admitido en forma decimal (0<n<1).\nEleccion:"<<endl;
+            cin>>w;
+            switch(w){
+                case 1:{
+                    cout<<"\nEl presente programa es capaz de aproximar el numero pi usando la forma sumatoria:\n\n    - pi= sqrt(E(6/(i^2))) desde i=1 hasta n. \n\nIngrese el grado de aproximacion deseado (n): ";
+                    cin>>n;
 
-            for(i=1; i<=n; i++){
-                sigma=sigma+(6/pow(i,2));
+                    for(i=1; i<=n; i++){
+                        sigma=sigma+(6/pow(i,2));
+                    }
+                    pi=sqrt(sigma);
+                    error=3.14159265359-pi;
+                    cout<<"\nEl valor aproximado de pi usando el grado de aproximacion "<<n<<" es: "<<pi<<endl;
+                    cout<<"\nEl error en la aproximacion es: "<<error<<endl;
+                    break;
+                }
+                case 2:{
+                    double pierror=0;
+                    cout<<"\nEl presente programa es capaz de aproximar el numero pi usando la forma sumatoria:\n\n    - pi= sqrt(E(6/(i^2))) desde i=1 hasta n. \n\nIngrese el error de aproximacion aceptado (m) [nota; un valor positivo desciende el resultado final, un negativo lo aumenta]: ";
+                    cin>>error;
+                    n=10000000;
+                    for(i=1; i<=n; i++){
+                        sigma=sigma+(6/pow(i,2));
+                    }
+                    pi=sqrt(sigma);
+                    pi-=(pi*error);
+                    pierror=pi;
+                    cout<<"\nEl valor aproximado de pi usando el error admitido "<<error<<" es: "<<pi<<endl;
+                    pi=0;
+                    i=1;
+                    sigma=0;
+                    while(pi<pierror){
+                        sigma=sigma+(6/pow(i,2));
+                        pi=sqrt(sigma);
+                        i+=1;
+                    }
+                    cout<<"\nLas iteraciones necesarias fueron aproximadamente: "<<i<<endl;
+                    break;
+                }
             }
-            pi=sqrt(sigma);
-            error=3.14159265359-pi;
-            cout<<"\nEl valor aproximado de pi usando el grado de aproximacion "<<n<<" es: "<<pi<<endl;
-            cout<<"\nEl error en la aproximacion es: "<<error<<endl;
         break;
         }
         case 4:{
