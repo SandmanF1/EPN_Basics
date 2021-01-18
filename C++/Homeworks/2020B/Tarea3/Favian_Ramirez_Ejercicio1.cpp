@@ -36,10 +36,10 @@ int main(){
         {
             for (int j=i+1; j<n; j++)
             {
-                if(randomNumbers[i]<randomNumbers[j])
+                if(randomNumbers[i]<randomNumbers[j])   //Compruebo si el vector es menor
                 {
-                    aux = randomNumbers[i];
-                    randomNumbers[i] = randomNumbers[j];
+                    aux = randomNumbers[i];             //En caso de ser menor lo guardo en mi variable auxiliar
+                    randomNumbers[i] = randomNumbers[j];//Intercambio los valores de posicion
                     randomNumbers[j] = aux;
                 }
             }
