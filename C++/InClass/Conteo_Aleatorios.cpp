@@ -122,14 +122,13 @@ int main(){
                 //Comprobacion en el intervalo y relleno del vector
                 if (n>3)
                 {
-                    for (int i = 0; i <= n; i++)
+                    for (int i = 0; i < n; i++)
                     {
                         primeColletion[i]= (rand()%((n*n)-(n)+1))+(n);
                         if (EsPrimo(primeColletion[i]))
                         {
                             cout << "\t" << primeColletion[i] << " Es Primo!" << endl;
                             nprimos++;
-
                         }
                         
                     }
