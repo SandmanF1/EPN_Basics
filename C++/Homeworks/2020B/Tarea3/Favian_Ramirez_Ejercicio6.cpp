@@ -58,11 +58,13 @@ int main(){
             b=(2);
             for (int i = 0; i < k; i++)
             {
-                y= a+((b-a)*u);                         //Cambio de variable para que este dentro de los limites 0 y 1
-                u= double(1+rand()%100000)/100000;    //Generacion de numeros aleatorios entre 0 y 1
-                E+= (b-a)*exp(y+(2*pow(y,2)));
+                u= (double)(rand()%(1000000+1))/1000000;    //Generacion de numeros aleatorios entre 0 y 1
+                y= (double)(a+((b-a)*u));                         //Cambio de variable para que este dentro de los limites 0 y 1
+                E+= exp(y+(2*pow(y,2)));
             }
-            cout<<"El valor de la aproximacion de la integral es: "<<double(E/k)<<endl;
+
+            E*=(b-a)/k;
+            cout<<"El valor de la aproximacion de la integral es: "<<E<<endl;
             
             break;
         }
@@ -72,10 +74,12 @@ int main(){
             //b= infinito;
             for (int i = 0; i < k; i++)
             {
-                y= a+((b-a)*u);                         //Cambio de variable para que este dentro de los limites 0 y 1
                 u= double(1+rand()%100000)/100000;    //Generacion de numeros aleatorios entre 0 y 1
-                E+= (3*y)*pow(1+pow(y,2),(-2));
+                y= (1.0/u)-1;                         //Cambio de variable para que este dentro de los limites 0 y 1
+                E+= ((3*y)*pow(1+pow(y,2),(-2)))/(u*u);
             }
+            E/=k;
+            cout<<"El valor de la aproximacion de la integral es: "<<E<<endl;
             
             break;
         }
