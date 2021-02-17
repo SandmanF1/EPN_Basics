@@ -9,6 +9,7 @@
 using namespace std;
 
 //Declaracion de Funciones +++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 //Funcion que divide usando restas sucesivas
 void division(int dividendo, int divisor, int &cociente, int &residuo);
 //Funcion que genera un vector de longitud 16 con valores aleatorios en el intervalo [-8.25; 12.75]
@@ -17,7 +18,13 @@ void generar(int v[], int dim);
 void matriz(int M[][16], int v[], int fila, int columna);//Lo siento pero un m no declarado o variable no se admite en un arreglo estatico
 void Serie(int n, double &S, double &z);
 void sumarFilasImpares(int M[][16], int fila, int columna, int &suma);
+void amigos(int n);
 //Funciones Sudoku
+bool checkrow(int M[9][9], int n);
+bool checkcolumn(int M[9][9], int n);
+bool checkbox(int M[9][9], int n, int m);
+bool checkall(int M [9][9]);
+
 //Fin Declaracion de Funciones -------------------------------------------------
 
 //Funcion Principal
@@ -87,15 +94,153 @@ int main(){
         }
         case 4:
         {
+            int n;
             cout<<"Ejercicio "<<choose<<": Programa que recibe un entero positivo n y encuentra los pares de numeros amigos a y n en el intervalo [2,n]"<<endl;
-
+            cout<<"Ingrese el n que desea usar: ";
+            cin>>n;
+            amigos(n);
 
             break;
         }
         case 5:
         {
             cout<<"Ejercicio "<<choose<<": Programa que comprueba si es valido el relleno de un sudoku"<<endl;
+            cout<<"Bienvenido a Super Sudoku El Loco, diviertete rellenando, las reglas ya las conoces asi que no te hagas el loco"<<endl;
+            int M[9][9];
+            int x=0, y=0;
+            bool seguir=1;
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    M[i][j]=0;
+                }
+                
+            }
+            while (seguir)
+            {
+                /* Aquí le mando un sudoku bien resuleto para que no se rompa la cabeza, profe jajaja, pero recuerde que es hacer trampa 
+                M[0][0]=9;
+                M[0][1]=6;
+                M[0][2]=3;
+                M[0][3]=1;
+                M[0][4]=7;
+                M[0][5]=4;
+                M[0][6]=2;
+                M[0][7]=5;
+                M[0][8]=8;
+                M[1][0]=1;
+                M[1][1]=7;
+                M[1][2]=8;
+                M[1][3]=3;
+                M[1][4]=2;
+                M[1][5]=5;
+                M[1][6]=6;
+                M[1][7]=4;
+                M[1][8]=9;
+                M[2][0]=2;
+                M[2][1]=5;
+                M[2][2]=4;
+                M[2][3]=6;
+                M[2][4]=8;
+                M[2][5]=9;
+                M[2][6]=7;
+                M[2][7]=3;
+                M[2][8]=1;
+                M[3][0]=8;
+                M[3][1]=2;
+                M[3][2]=1;
+                M[3][3]=4;
+                M[3][4]=3;
+                M[3][5]=7;
+                M[3][6]=5;
+                M[3][7]=9;
+                M[3][8]=6;
+                M[4][0]=4;
+                M[4][1]=9;
+                M[4][2]=6;
+                M[4][3]=8;
+                M[4][4]=5;
+                M[4][5]=2;
+                M[4][6]=3;
+                M[4][7]=1;
+                M[4][8]=7;
+                M[5][0]=7;
+                M[5][1]=3;
+                M[5][2]=5;
+                M[5][3]=9;
+                M[5][4]=6;
+                M[5][5]=1;
+                M[5][6]=8;
+                M[5][7]=2;
+                M[5][8]=4;
+                M[6][0]=5;
+                M[6][1]=8;
+                M[6][2]=9;
+                M[6][3]=7;
+                M[6][4]=1;
+                M[6][5]=3;
+                M[6][6]=4;
+                M[6][7]=6;
+                M[6][8]=2;
+                M[7][0]=3;
+                M[7][1]=1;
+                M[7][2]=7;
+                M[7][3]=2;
+                M[7][4]=4;
+                M[7][5]=6;
+                M[7][6]=9;
+                M[7][7]=8;
+                M[7][8]=5;
+                M[8][0]=6;
+                M[8][1]=4;
+                M[8][2]=2;
+                M[8][3]=5;
+                M[8][4]=9;
+                M[8][5]=8;
+                M[8][6]=1;
+                M[8][7]=7;
+                M[8][8]=3;
+                */
+                
+                cout<<"Tu sudoku actualmente es:\n"<<endl;
+                //Dibujado del tablero
+                cout<<"\t \t| "<<M[0][0]<<" "<<M[0][1]<<" "<<M[0][2]<<" | "<<M[0][3]<<" "<<M[0][4]<<" "<<M[0][5]<<" | "<<M[0][6]<<" "<<M[0][7]<<" "<<M[0][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[1][0]<<" "<<M[1][1]<<" "<<M[1][2]<<" | "<<M[1][3]<<" "<<M[1][4]<<" "<<M[1][5]<<" | "<<M[1][6]<<" "<<M[1][7]<<" "<<M[1][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[2][0]<<" "<<M[2][1]<<" "<<M[2][2]<<" | "<<M[2][3]<<" "<<M[2][4]<<" "<<M[2][5]<<" | "<<M[2][6]<<" "<<M[2][7]<<" "<<M[2][8]<<" | "<<endl;
+                cout<<"\t \t|-------|-------|-------|"<<endl;
+                cout<<"\t \t| "<<M[3][0]<<" "<<M[3][1]<<" "<<M[3][2]<<" | "<<M[3][3]<<" "<<M[3][4]<<" "<<M[3][5]<<" | "<<M[3][6]<<" "<<M[3][7]<<" "<<M[3][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[4][0]<<" "<<M[4][1]<<" "<<M[4][2]<<" | "<<M[4][3]<<" "<<M[4][4]<<" "<<M[4][5]<<" | "<<M[4][6]<<" "<<M[4][7]<<" "<<M[4][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[5][0]<<" "<<M[5][1]<<" "<<M[5][2]<<" | "<<M[5][3]<<" "<<M[5][4]<<" "<<M[5][5]<<" | "<<M[5][6]<<" "<<M[5][7]<<" "<<M[5][8]<<" | "<<endl;
+                cout<<"\t \t|-------|-------|-------|"<<endl;
+                cout<<"\t \t| "<<M[6][0]<<" "<<M[6][1]<<" "<<M[6][2]<<" | "<<M[6][3]<<" "<<M[6][4]<<" "<<M[6][5]<<" | "<<M[6][6]<<" "<<M[6][7]<<" "<<M[6][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[7][0]<<" "<<M[7][1]<<" "<<M[7][2]<<" | "<<M[7][3]<<" "<<M[7][4]<<" "<<M[7][5]<<" | "<<M[7][6]<<" "<<M[7][7]<<" "<<M[7][8]<<" | "<<endl;
+                cout<<"\t \t| "<<M[8][0]<<" "<<M[8][1]<<" "<<M[8][2]<<" | "<<M[8][3]<<" "<<M[8][4]<<" "<<M[8][5]<<" | "<<M[8][6]<<" "<<M[8][7]<<" "<<M[8][8]<<" | \n"<<endl;
 
+                cout<<"Deseas cambiar algo?(1/0): ";
+                cin>>seguir;
+                if (!seguir)
+                {
+                    break;
+                }
+                
+                cout<<"Fila: ";
+                cin>>x;
+                cout<<"Columna: ";
+                cin>>y;
+                cout<<"Nuevo valor: ";
+                cin>>M[x][y];
+            }
+            
+            if (checkall(M))
+            {
+                cout<<"Felicidades, ganaste!"<<endl;
+            }else
+            {
+                cout<<"Que pena, perdiste, aqui solo tienes una oportunidad de enviarlo asi que te toca hacerlo todo de nuevo\n"<<endl;
+            }
+            
+            
 
             break;
         }
@@ -172,4 +317,122 @@ void Serie(int n, double &S, double &z){
     }
     z*=(1.0/S);
 };
+
+void amigos(int n){
+    int divisores=0;
+    int divisores2=0;
+    for (int i = 2; i <= n; i++)
+    {
+        divisores=0;
+        divisores2=0;
+        for (int j = 1; j < i; j++)
+        {
+            if (i%j==0)
+            {
+                divisores+=j;
+            }
+            
+        }
+        for (int j = 1; j < divisores; j++)
+        {
+            if (divisores%j==0)
+            {
+                divisores2+=j;
+            }
+            
+        }
+        if (divisores2==i && divisores!=i)
+        {
+            cout<<i<<" y "<<divisores<<" son numeros amigos!"<<endl;
+            i=divisores+1; //Esta linea es para eviar que se repitan pares de numeros amigos
+        }
+        
+    }
+    cout<<"\n"<<endl;
+};
 //Funciones Sudoku
+bool checkrow(int M[9][9], int n){
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (M[n][j]==M[n][i] && i!=j)
+            {
+                return 0;
+            }
+            
+        }
+        
+    }
+    return 1;
+};
+
+bool checkcolumn(int M[9][9], int n){
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (M[j][n]==M[i][n] && i!=j)
+            {
+                return 0;
+            }
+            
+        }
+        
+    }
+    return 1;
+};
+
+bool checkbox(int M[9][9], int n, int m){
+    for (int i = n; i <= (n+2); i++)
+    {
+        for (int j = m; j <= (m+2); j++)
+        {
+            for (int k = n; k <= (n+2); k++)
+            {
+                for (int l = m; l <= (m+2); l++)
+                {
+                    if (M[i][j]==M[k][l] && i!=k && j!=l)
+                    {
+                        return 0;
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    return 1;
+};
+
+bool checkall(int M [9][9]){
+    for (int i = 0; i < 9; i++)
+    {
+        if (!checkrow(M, i))
+        {
+            return 0;
+        }
+        
+    }
+    for (int i = 0; i < 9; i++)
+    {
+        if (!checkcolumn(M, i))
+        {
+            return 0;
+        }
+    }
+    for (int i = 0; i < 9; i+=3)
+    {
+        for (int j = 0; j < 9; j+=3)
+        {
+            if (!checkbox(M, i, j))
+            {
+                return 0;
+            }
+            
+        }
+    }
+    return 1;
+};
